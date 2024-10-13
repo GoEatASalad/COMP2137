@@ -11,6 +11,7 @@ source /etc/os-release
 myUsername="$USER"
 currentDateTime="$(date)"
 currentHostname="$(hostname)"
+currentUptime="$(uptime)"
 
 #########################################
 
@@ -23,7 +24,7 @@ System Information
 ------------------
 Hostname: $currentHostname
 OS: $PRETTY_NAME
-Uptime: UPTIME
+Uptime: $currentUptime
  
 Hardware Information
 --------------------
