@@ -7,14 +7,23 @@ source /etc/os-release
 #Veriables used from above are:
 #$PRETTY_NAME
 
-#Variables
+###Variables###
+#finds username of current user
 myUsername="$USER"
+#finds current date and time
 currentDateTime="$(date)"
+#finds name of the host machine
 currentHostname="$(hostname)"
+#displays the machine's current uptime
 currentUptime="$(uptime)"
+#runs lscpu, extracts line containing 'Model name:', and removes unimportant text
 cpuInfo="$(lscpu | grep 'Model name:' | sed 's/Model name:                           //')"
+#runs lshw, extracts the first instance of 'size', and removes unimportant text
 ram="$(lshw | grep -m 1 size | sed 's/          size: //')"
+#accesses /proc/cpuinfo, extracts the first instance of 'MHz', and only returns anything on the line containing numbers 0-9 and decimals
 cpuSpeed="$(cat /proc/cpuinfo | grep -m 1 MHz | grep -o [0-9.]*)"
+#runs lshw looking for display devices, extracts lines with 'vendor' and 'product', removes unimportant spaces, replaces 'vendor' and 'product' strings, removes new line
+videoCard="$(sudo lshw -c display | grep -e 'vendor' -e 'product' | sed 's/       //' | sed 's/vendor/ Produced By/g' | sed 's/product://' | tr -d '\n')"
 
 #########################################
 
@@ -35,7 +44,7 @@ cpu: $cpuInfo
 Speed: $cpuSpeed MHz
 Ram: $ram
 Disk(s): MAKE AND MODEL AND SIZE FOR ALL INSTALLED DISKS
-Video: MAKE AND MODEL OF VIDEO CARD
+Video Card: $videoCard
  
 Network Information
 -------------------
