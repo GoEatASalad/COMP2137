@@ -14,7 +14,7 @@ currentHostname="$(hostname)"
 currentUptime="$(uptime)"
 cpuInfo="$(lscpu | grep 'Model name:' | sed 's/Model name:                           //')"
 ram="$(lshw | grep -m 1 size | sed 's/          size: //')"
-
+cpuSpeed="$(cat /proc/cpuinfo | grep -m 1 MHz | grep -o [0-9.]*)"
 
 #########################################
 
@@ -32,7 +32,7 @@ Uptime: $currentUptime
 Hardware Information
 --------------------
 cpu: $cpuInfo
-Speed: CURRENT AND MAXIMUM CPU SPEED
+Speed: $cpuSpeed MHz
 Ram: $ram
 Disk(s): MAKE AND MODEL AND SIZE FOR ALL INSTALLED DISKS
 Video: MAKE AND MODEL OF VIDEO CARD
