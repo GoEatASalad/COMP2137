@@ -7,7 +7,7 @@ source /etc/os-release
 #Veriables used from above are:
 #$PRETTY_NAME
 
-###Variables###
+######Variables######
 #finds username of current user
 myUsername="$USER"
 #finds current date and time
@@ -24,6 +24,14 @@ ram="$(lshw | grep -m 1 size | sed 's/          size: //')"
 cpuSpeed="$(cat /proc/cpuinfo | grep -m 1 MHz | grep -o [0-9.]*)"
 #runs lshw looking for display devices, extracts lines with 'vendor' and 'product', removes unimportant spaces, replaces 'vendor' and 'product' strings, removes new line
 videoCard="$(sudo lshw -c display | grep -e 'vendor' -e 'product' | sed 's/       //' | sed 's/vendor/ Produced By/g' | sed 's/product://' | tr -d '\n')"
+#finds the machine's fqdn
+getFQDN="$(hostname -f)"
+#finds IP of the hostname
+hostnameIP="$(hostname -I)"
+#finds routing info, locates word 'default', gathers text of ip addresses, returns the first address (which is the default gateway)
+defaultGateway="$(ip route | grep default | grep -o [0-9.]* | grep -m 1 [0-9.])"
+#extracts 'nameserver' line from resolv.conf, removes unimportant text.
+dnsIP="$(grep nameserver /etc/resolv.conf | sed 's/nameserver //')"
 
 #########################################
 
@@ -48,10 +56,10 @@ Video Card: $videoCard
  
 Network Information
 -------------------
-FQDN: FQDN
-Host Address: IP ADDRESS FOR THE HOSTNAME
-Gateway IP: GATEWAY ADDRESS
-DNS Server: IP OF DNS SERVER
+FQDN: $getFQDN
+Host Address: $hostnameIP
+Gateway IP: $defaultGateway
+DNS Server: $dnsIP
  
 InterfaceName: MAKE AND MODEL OF NETWORK CARD
 IP Address: IP Address in CIDR format
