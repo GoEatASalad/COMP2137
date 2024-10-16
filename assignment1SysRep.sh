@@ -23,7 +23,7 @@ ram="$(lshw | grep -m 1 size | sed 's/          size: //')"
 #accesses /proc/cpuinfo, extracts the first instance of 'MHz', and only returns anything on the line containing numbers 0-9 and decimals
 cpuSpeed="$(cat /proc/cpuinfo | grep -m 1 MHz | grep -o [0-9.]*)"
 #runs lshw looking for display devices, extracts lines with 'vendor' and 'product', removes unimportant spaces, replaces 'vendor' and 'product' strings, removes new line
-videoCard="$(sudo lshw -c display | grep -e 'vendor' -e 'product' | sed 's/       //' | sed 's/vendor/ Produced By/g' | sed 's/product://' | tr -d '\n')"
+videoCard="$(sudo lshw -c display | grep -e 'vendor' -e 'product' | sed 's/       //' | sed 's/vendor/    Produced By/g' | sed 's/product://' | tr -d '\n')"
 #finds the machine's fqdn
 getFQDN="$(hostname -f)"
 #finds IP of the hostname
@@ -32,6 +32,8 @@ hostnameIP="$(hostname -I)"
 defaultGateway="$(ip route | grep default | grep -o [0-9.]* | grep -m 1 [0-9.])"
 #extracts 'nameserver' line from resolv.conf, removes unimportant text.
 dnsIP="$(grep nameserver /etc/resolv.conf | sed 's/nameserver //')"
+#runs lshw looking for network devices, extracts lines with 'product' and 'vendor', removes unimportant spaces, replaces 'product' and 'vendor' strings, and removes the new line
+nicInfo="$(sudo lshw -class network | grep -e 'product' -e 'vendor' | sed 's/       //' | sed 's/product://' | sed 's/vendor/    Produced By/g' | tr -d '\n')"
 
 #########################################
 
@@ -61,7 +63,7 @@ Host Address: $hostnameIP
 Gateway IP: $defaultGateway
 DNS Server: $dnsIP
  
-InterfaceName: MAKE AND MODEL OF NETWORK CARD
+InterfaceName: $nicInfo
 IP Address: IP Address in CIDR format
  
 System Status
