@@ -47,6 +47,10 @@ memAllocate="$(echo '' ; free)"
 listenPorts="$(echo '' ; sudo ss -lntu | grep LISTEN)"
 #runs ufw to get status of rules
 ufwStstus="$(sudo ufw status numbered)"
+#runs lshw looking for disk drives, extracts lines with 'product' and 'vendor', removes unimportant spaces, replaces 'product' and 'vendor' strings, removes new lines
+listDisk="$(sudo lshw -c disk | grep -e 'product' -e 'vendor' | sed 's/       //' | sed 's/product/Disk Type/g' | sed 's/vendor/  Produced By/g' | tr -d '\n')"
+#starts a new line, runs df in human-readable format
+diskSpace="$(echo '' ; df -h)"
 
 #########################################
 
@@ -66,7 +70,7 @@ Hardware Information
 cpu: $cpuInfo
 Speed: $cpuSpeed MHz
 Ram: $ram
-Disk(s): MAKE AND MODEL AND SIZE FOR ALL INSTALLED DISKS
+Disk(s): $listDisk
 Video Card: $videoCard
  
 Network Information
@@ -82,7 +86,7 @@ IP Address: $cidrIP
 System Status
 -------------
 Users Logged In: $usersLoggedIn
-Disk Space: FREE SPACE FOR LOCAL FILESYSTEMS IN FORMAT: /MOUNTPOINT N
+Disk Space: $diskSpace
 Process Count: $processNum
 Load Averages: $loadAverages
 Memory Allocation: $memAllocate
