@@ -34,6 +34,19 @@ defaultGateway="$(ip route | grep default | grep -o [0-9.]* | grep -m 1 [0-9.])"
 dnsIP="$(grep nameserver /etc/resolv.conf | sed 's/nameserver //')"
 #runs lshw looking for network devices, extracts lines with 'product' and 'vendor', removes unimportant spaces, replaces 'product' and 'vendor' strings, and removes the new line
 nicInfo="$(sudo lshw -class network | grep -e 'product' -e 'vendor' | sed 's/       //' | sed 's/product://' | sed 's/vendor/    Produced By/g' | tr -d '\n')"
+cidrIP="$(ip r | grep -o [0-9./]* | grep '/')"
+#display logged in users
+usersLoggedIn="$(users)"
+#displays process number
+processNum="$(echo $$)"
+#runs uptime, exatracts any text matching X.XX, replaces new line with space
+loadAverages="$(uptime | grep -o [0-9][.][0-9][0-9] | tr '\n' ' ')"
+#runs free to show memory allocation on a new line
+memAllocate="$(echo '' ; free)"
+#runs ss looking for listening ports, extract all lines with 'LISTEN' after starting a new line
+listenPorts="$(echo '' ; sudo ss -lntu | grep LISTEN)"
+#runs ufw to get status of rules
+ufwStstus="$(sudo ufw status numbered)"
 
 #########################################
 
@@ -63,16 +76,16 @@ Host Address: $hostnameIP
 Gateway IP: $defaultGateway
 DNS Server: $dnsIP
  
-InterfaceName: $nicInfo
-IP Address: IP Address in CIDR format
+NIC: $nicInfo
+IP Address: $cidrIP
  
 System Status
 -------------
-Users Logged In: USER,USER,USER...
+Users Logged In: $usersLoggedIn
 Disk Space: FREE SPACE FOR LOCAL FILESYSTEMS IN FORMAT: /MOUNTPOINT N
-Process Count: N
-Load Averages: N, N, N
-Memory Allocation: DATA FROM FREE
-Listening Network Ports: N, N, N, ...
-UFW Rules: DATA FROM UFW SHOW
+Process Count: $processNum
+Load Averages: $loadAverages
+Memory Allocation: $memAllocate
+Listening Network Ports: $listenPorts
+UFW Rules: $ufwStatus
 EOF
