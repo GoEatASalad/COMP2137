@@ -48,3 +48,28 @@ if ! id "aubrey" &>/dev/null; then
 else
 	echo "User 'aubrey' already exists."
 fi
+# Create the .ssh directory with user rwx permissions
+sudo mkdir -p /home/aubrey/.ssh
+sudo chmod 700 /home/aubrey/.ssh
+# Generate the rsa key pair if it doesn't already exist.
+if ! -f /home/aubrey/.ssh/id_rsa; then
+	sudo ssh-keygen -t rsa -b 4096 -f /home/aubrey/.ssh/id_rsa -N ""
+	echo "RSA key has been generated for aubrey."
+fi
+# Create the ed25519 key pair if it doesn't already exist.
+if ! -f /home/aubrey/.ssh/id_ed25519; then
+	sudo ssh-keygen -t ed25519 -f /home/aubrey/.ssh/id_ed25519 -N ""
+	echo "ED25519 key has been generated for aubrey."
+fi
+# Set permissions for the keys
+sudo chmod 600 /home/aubrey/.ssh/id_rsa /home/aubrey/.ssh/id_ed25519
+sudo chmod 644 /home/aubrey/.ssh/id_rsa.pub /home/aubrey/.ssh/id_ed25519.pub
+# Add public keys to authorized_keys
+cat /home/aubrey/.ssh/id_rsa.pub | sudo tee -a /home/aubrey/.ssh/authorized_keys
+cat /home/aubrey/.ssh/id_ed25519.pub | sudo tee -a /home/aubrey/.ssh/authorized_keys
+# Set permissions for authorized_keys
+sudo chmod 600 /home/aubrey/.ssh/authorized_keys
+# Sets owner of /.ssh and its contents to aubrey
+sudo chown -R aubrey:aubrey /home/aubrey/.ssh
+# Returns a confirmation message
+echo "SSH and ED25519 keys have been generated and added to authorized_users for aubrey."
