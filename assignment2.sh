@@ -446,6 +446,8 @@ if [ ! -d "/home/dennis/.ssh" ]; then
 else
 	echo "/home/dennis/.ssh directory already exists."
 fi
+# Give the user sudo access
+sudo usermod -aG sudo dennis
 # Generate the rsa key pair if it doesn't already exist.
 if [ ! -f /home/dennis/.ssh/id_rsa ]; then
 	sudo ssh-keygen -t rsa -b 4096 -f /home/dennis/.ssh/id_rsa -N ""
