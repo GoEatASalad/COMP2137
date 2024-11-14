@@ -2,7 +2,7 @@
 
 # Test to see if apache2 is installed.
 # If true, returns a message to the user.
-if dpkg -l apache2; then
+if dpkg -l | grep -q apache2; then
 	echo "Apache2 is already installed."
 # If false, tells the user apache2 will now be installed.
 else
@@ -23,7 +23,7 @@ fi
 
 # Test to see if squid is installed.
 # If true, returns a message to the user.
-if dpkg -l squid; then
+if dpkg -l | grep -q squid; then
 	echo "Squid is already installed."
 # If false, tells the user squid will now be installed.
 else
