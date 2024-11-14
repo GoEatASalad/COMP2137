@@ -1,0 +1,25 @@
+---Host/Student info----
+
+Running on Wed Nov 13 11:35:20 PM EST 2024
+Run by mackenzie - () on host
+ Static hostname: pc200595880
+      Machine ID: 923e8e1cd26749aca78b9524b6cf4d51
+Operating System: Ubuntu 24.04.1 LTS
+9ac9629390cbcae160fd061a74ce1178  ./check-assign2-script.sh - 9ac9629390cbcae160fd061a74ce1178  -
+------------------------
+
+---Start of Assignment2.sh Check------
+---Running makecontainers.sh----------
+This script performs many tasks. Please be patient
+To see more about what it is doing as it does it, use the --verbose option
+You may ignore any messages about Open vSwitch or dpkg-preconfigure being unable to re-open stdin
+DO NOT use control-Z when this script is running.
+Network lan deleted
+Network mgmt deleted
+Network lan created
+Network mgmt created
+Launching openwrt
+Retrieving image: Unpack: 100% (2.81GB/s)                                          Retrieving image: Unpack: 100% (2.81GB/s)                                          Launching server1
+Retrieving image: Unpack: 100% (2.12GB/s)                                          Retrieving image: Unpack: 100% (2.12GB/s)                                          Pushing /home/mackenzie/.ssh/id_ed25519.pub to /home/remoteadmin/.ssh/id_ed25519.pub: 100% (327.97MB/s)                                                                                                        Waiting for server1 restart
+---Retrieving assignment2.sh script---
+Failed to retrieve assignment2.sh script using URL 'https://github.com/GoEatASalad/COMP2137/raw/glob/assignment2.sh'
