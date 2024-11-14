@@ -48,16 +48,21 @@ if ! id "aubrey" &>/dev/null; then
 else
 	echo "User 'aubrey' already exists."
 fi
-# Create the .ssh directory with user rwx permissions
-sudo mkdir -p /home/aubrey/.ssh
-sudo chmod 700 /home/aubrey/.ssh
+# Create the .ssh directory with user rwx permissions if it doesn't already exist
+if [ ! -d "/home/aubrey/.ssh" ]; then
+	sudo mkdir -p /home/aubrey/.ssh
+	sudo chmod 700 /home/aubrey/.ssh
+	echo "/home/aubrey/.ssh directory has been created."
+else
+	echo "/home/aubrey/.ssh directory already exists."
+fi
 # Generate the rsa key pair if it doesn't already exist.
-if ! -f /home/aubrey/.ssh/id_rsa; then
+if [ ! -f /home/aubrey/.ssh/id_rsa ]; then
 	sudo ssh-keygen -t rsa -b 4096 -f /home/aubrey/.ssh/id_rsa -N ""
 	echo "RSA key has been generated for aubrey."
 fi
 # Create the ed25519 key pair if it doesn't already exist.
-if ! -f /home/aubrey/.ssh/id_ed25519; then
+if [ ! -f /home/aubrey/.ssh/id_ed25519 ]; then
 	sudo ssh-keygen -t ed25519 -f /home/aubrey/.ssh/id_ed25519 -N ""
 	echo "ED25519 key has been generated for aubrey."
 fi
