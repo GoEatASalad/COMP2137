@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Targets for /etc/hosts
+desiredIP="192.168.16.21"
+desiredHotsname="server1"
+desiredFile="/etc/hosts"
 # Test to see if apache2 is installed.
 # If true, returns a message to the user.
 if dpkg -l | grep -q apache2; then
@@ -470,3 +474,12 @@ sudo chmod 600 /home/dennis/.ssh/authorized_keys
 sudo chown -R dennis:dennis /home/dennis/.ssh
 # Returns a confirmation message
 echo "SSH and ED25519 keys have been generated and added to authorized_users for dennis."
+
+# Check /etc/hosts for correct IP/hostname configuration
+if grep -q "^$desiredIP.*\b$desiredHostname\b" "$desiredFile"; then
+	echo "$desiredHostname is already assigned to $desiredIP"
+else
+	sudo sed -i "/\b$desiredHostname\b/d" "$desiredFile"
+	echo "$desiredIp $desiredHostname" | sudo tee -a "$desiredFile" > /dev/null
+	echo "$desiredHost has been assigned $desiredIp"
+fi
