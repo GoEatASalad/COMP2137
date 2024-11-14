@@ -1,6 +1,6 @@
 ---Host/Student info----
 
-Running on Wed Nov 13 11:35:20 PM EST 2024
+Running on Wed Nov 13 11:54:36 PM EST 2024
 Run by mackenzie - () on host
  Static hostname: pc200595880
       Machine ID: 923e8e1cd26749aca78b9524b6cf4d51
@@ -19,7 +19,9 @@ Network mgmt deleted
 Network lan created
 Network mgmt created
 Launching openwrt
-Retrieving image: Unpack: 100% (2.81GB/s)                                          Retrieving image: Unpack: 100% (2.81GB/s)                                          Launching server1
-Retrieving image: Unpack: 100% (2.12GB/s)                                          Retrieving image: Unpack: 100% (2.12GB/s)                                          Pushing /home/mackenzie/.ssh/id_ed25519.pub to /home/remoteadmin/.ssh/id_ed25519.pub: 100% (327.97MB/s)                                                                                                        Waiting for server1 restart
+Retrieving image: Unpack: 100% (1.58GB/s)                                          Retrieving image: Unpack: 100% (1.58GB/s)                                          Launching server1
+Retrieving image: Unpack: 100% (2.26GB/s)                                          Retrieving image: Unpack: 100% (2.26GB/s)                                          Pushing /home/mackenzie/.ssh/id_ed25519.pub to /home/remoteadmin/.ssh/id_ed25519.pub: 100% (507.46MB/s)                                                                                                        Waiting for server1 restart
 ---Retrieving assignment2.sh script---
-Failed to retrieve assignment2.sh script using URL 'https://github.com/GoEatASalad/COMP2137/raw/glob/assignment2.sh'
+Retrieved assignment2 script
+Copied assignment2.sh script to server1
+---assignment2.sh run----
