@@ -1,0 +1,28 @@
+- name: apache2 install playbook - install apache, configure ports & firewall
+  hosts: target1-mgmt
+  remote_user: remoteadmin
+  become: yes
+  tasks:
+    - name: apache2 install
+      apt:
+        name: apache2
+        update_cache: yes
+        state: latest
+    - name: ufw install
+      apt:
+        name: ufw
+        update_cache: yes
+        state: present
+    - name: allow ssh
+      community.general.ufw:
+        rule: allow
+        name: OpenSSH
+    - name: open port 80 for http
+      community.general.ufw:
+        rule: allow
+        port: '80'
+        proto: tcp
+    - name: enable ufw
+      community.general.ufw:
+        state: enabled
+        policy: allow

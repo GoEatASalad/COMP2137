@@ -1,0 +1,28 @@
+- name: mySQL install playbook - install mySQL, configure ports & firewall
+  hosts: target2-mgmt
+  remote_user: remoteadmin
+  become: yes
+  tasks:
+    - name: mysql install
+      apt:
+        name: mysql-server
+        update_cache: yes
+        state: latest
+    - name: ufw install
+      apt:
+        name: ufw
+        update_cache: yes
+        state: present
+    - name: allow ssh
+      community.general.ufw:
+        rule: allow
+        name: OpenSSH
+    - name: open port 3306 for mySQL
+      community.general.ufw:
+        rule: allow
+        port: '3306'
+        proto: tcp
+    - name: enable ufw
+      community.general.ufw:
+        state: enabled
+        policy: allow
